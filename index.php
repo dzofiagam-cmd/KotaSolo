@@ -332,6 +332,37 @@ header('Content-Type: text/html; charset=utf-8');
     </div>
 </footer>
 
+<!-- RuteSolo AI Chatbot -->
+<div class="ai-chat-container" id="aiChatContainer">
+    <div class="ai-chat-header">
+        <div class="ai-chat-header-info">
+            <div class="brand-icon brand-icon--sm" aria-hidden="true">
+                <i data-lucide="map-pin-check"></i>
+            </div>
+            <div>
+                <h3>RuteSolo AI</h3>
+                <p>Asisten Wisata Solo</p>
+            </div>
+        </div>
+        <button class="ai-chat-close" id="aiChatClose" aria-label="Tutup chat">
+            <i data-lucide="x" width="20"></i>
+        </button>
+    </div>
+    <div class="ai-chat-messages" id="aiChatMessages">
+        <!-- Messages will be injected here -->
+    </div>
+    <div class="ai-chat-input-area">
+        <input type="text" id="aiChatInput" placeholder="Tanya rekomendasi tempat..." autocomplete="off" />
+        <button id="aiChatSend" aria-label="Kirim pesan">
+            <i data-lucide="send" width="18"></i>
+        </button>
+    </div>
+</div>
+
+<button class="ai-fab" id="aiFab" aria-label="Buka RuteSolo AI">
+    <i data-lucide="map-pin-check"></i>
+</button>
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 window.__DEST__  = <?php echo $destJson; ?>;
