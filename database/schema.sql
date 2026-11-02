@@ -44,17 +44,17 @@ INSERT INTO destinations (id,name,category,description,tags,latitude,longitude,i
 (5,'Masjid Agung Surakarta','Budaya & Sejarah','Masjid kerajaan yang berdiri sejak era Pakubuwono III, tepat di samping Pasar Klewer.','["masjid","agung","islam","kerajaan","pakubuwono","sejarah"]',-7.5741,110.8327,'assets/images/masjid-agung-surakarta.jpg'),
 (6,'Gedung Wayang Orang Sriwedari','Rekreasi','Panggung wayang orang tertua di Indonesia, masih menggelar pertunjukan rutin.','["wayang","orang","sriwedari","teater","budaya","pertunjukan"]',-7.5605,110.8352,'assets/images/wayang-orang-sriwedari.jpg'),
 (7,'Pura Mangkunegaran','Budaya & Sejarah','Pura berarsitektur Jawa-Eropa dengan koleksi sejarah Kadipaten Mangkunegaran.','["pura","mangkunegaran","budaya","sejarah","kerajaan","istana"]',-7.5686,110.8227,'assets/images/pura-mangkunegaran.jpg'),
-(8,'Museum Batik Danar Hadi','Museum','Museum batik dengan koleksi kain tradisional Nusantara di dalam kompleks House of Danar Hadi.','["museum","batik","danar hadi","budaya","kain","sejarah"]',-7.5680,110.8143,'assets/images/museum-batik-danar-hadi.jpg'),
-(9,'Museum Radya Pustaka','Museum','Museum tertua di Indonesia yang menyimpan naskah, arca, dan benda bersejarah Jawa.','["museum","radya pustaka","sejarah","budaya","naskah","arca"]',-7.5651,110.8125,'assets/images/museum-radya-pustaka.jpg'),
+(8,'Museum Batik Danar Hadi','Museum','Museum batik yang menyimpan ribuan lembar kain dari berbagai daerah dan masa, mulai dari batik keraton, batik pesisir, hingga batik pengaruh Belanda dan Tionghoa. Berada di kompleks House of Danar Hadi di Jalan Slamet Riyadi, pengunjung bisa berkeliling ruang pamer bersama pemandu dan mengenal proses pembuatan batik.','["museum","batik","danar hadi","budaya","kain","sejarah"]',-7.5680,110.8143,'assets/images/museum-batik-danar-hadi-v2.jpg'),
+(9,'Museum Radya Pustaka','Museum','Museum tertua di Indonesia yang didirikan pada tahun 1890 dan berada di Jalan Slamet Riyadi, dekat kawasan Sriwedari. Koleksinya meliputi naskah kuno, arca, keris, wayang, gamelan, dan benda bersejarah dari masa Kasunanan Surakarta, cocok untuk belajar sejarah dan budaya Jawa.','["museum","radya pustaka","sejarah","budaya","naskah","arca"]',-7.5651,110.8125,'assets/images/museum-radya-pustaka-v2.jpg'),
 (10,'Benteng Vastenburg','Budaya & Sejarah','Benteng peninggalan kolonial di pusat kota yang kini menjadi ruang acara dan sejarah.','["benteng","vastenburg","sejarah","kolonial","landmark","kota"]',-7.5697,110.8311,'assets/images/benteng-vastenburg.jpg'),
 (11,'Pasar Gede Harjonagoro','Belanja & Kuliner','Pasar tradisional ikonik untuk berburu jajanan, bahan segar, dan kuliner khas Solo.','["pasar gede","pasar","kuliner","jajanan","belanja","tradisional"]',-7.5693,110.8302,'assets/images/pasar-gede.jpg'),
 (12,'Kampung Batik Laweyan','Belanja & Budaya','Kampung saudagar batik dengan workshop, toko kain, dan gang bersejarah yang khas.','["laweyan","kampung batik","batik","belanja","budaya","kampung wisata"]',-7.5688,110.7953,'assets/images/kampung-batik-laweyan.jpg'),
-(13,'Taman Balekambang','Taman & Rekreasi','Taman kota bersejarah dengan ruang hijau, danau, serta area rekreasi keluarga.','["balekambang","taman","rekreasi","keluarga","ruang hijau","danau"]',-7.5542,110.8075,'assets/images/taman-balekambang.jpg'),
-(14,'Solo Safari','Taman & Rekreasi','Destinasi edukasi satwa dan rekreasi keluarga dengan area jelajah yang interaktif.','["solo safari","kebun binatang","satwa","rekreasi","keluarga","edukasi"]',-7.5942,110.8654,'assets/images/solo-safari.jpg'),
+(13,'Taman Balekambang','Taman & Rekreasi','Taman kota bersejarah yang dibangun pada masa Mangkunegara VII dan kini menjadi ruang hijau favorit warga Solo. Pepohonan rindang, kolam, dan area bermain membuatnya nyaman untuk jalan pagi, piknik keluarga, atau sekadar bersantai sambil menikmati suasana taman.','["balekambang","taman","rekreasi","keluarga","ruang hijau","danau"]',-7.5542,110.8075,'assets/images/taman-balekambang-v2.jpg'),
+(14,'Solo Safari','Taman & Rekreasi','Taman safari modern di Solo yang mengajak pengunjung melihat satwa dari dekat sambil berkeliling dengan kendaraan wisata maupun berjalan kaki. Cocok untuk liburan keluarga dan wisata edukasi anak, dengan berbagai fasilitas penunjang untuk berwisata seharian.','["solo safari","kebun binatang","satwa","rekreasi","keluarga","edukasi"]',-7.5942,110.8654,'assets/images/solo-safari-v2.jpg'),
 (15,'Taman Cerdas Jebres','Taman & Rekreasi','Ruang edukasi dan bermain publik yang ramah keluarga di kawasan Jebres.','["taman cerdas","jebres","taman","edukasi","keluarga","rekreasi"]',-7.5596,110.8540,'assets/images/taman-cerdas-jebres.jpg'),
 (16,'Galabo Solo','Kuliner','Sentra kuliner malam di pusat kota untuk menikmati hidangan khas Solo dan jajanan lokal.','["galabo","kuliner","kuliner malam","jajanan","makanan","street food"]',-7.5700,110.8290,'assets/images/galabo-solo.jpg'),
-(17,'Gedung Djoeang 45','Budaya & Sejarah','Bangunan bersejarah dekat Benteng Vastenburg yang menjadi ruang kreatif dan kuliner.','["gedung djoeang","djoeang 45","sejarah","kolonial","kuliner","landmark"]',-7.5708,110.8304,'assets/images/gedung-djoeang-45.svg'),
-(18,'Museum Keris Nusantara','Museum','Museum tematik yang mengenalkan keris sebagai warisan budaya dan karya seni Nusantara.','["museum keris","keris","museum","budaya","pusaka","nusantara"]',-7.5725,110.8129,'assets/images/museum-keris-nusantara.jpg');
+(17,'Gedung Djoeang 45','Budaya & Sejarah','Bangunan bersejarah di dekat Benteng Vastenburg yang kini difungsikan sebagai ruang kreatif dan kuliner. Suasana sore hingga malamnya semarak oleh lampu-lampu, kafe, dan area bersantai, sehingga ramai dikunjungi anak muda untuk nongkrong dan berburu foto.','["gedung djoeang","djoeang 45","sejarah","kolonial","kuliner","landmark"]',-7.5708,110.8304,'assets/images/gedung-djoeang-45-v2.jpg'),
+(18,'Museum Keris Nusantara','Museum','Museum tematik yang mengenalkan keris sebagai warisan budaya Nusantara yang diakui UNESCO sejak 2005. Koleksinya memperlihatkan ragam bilah, pamor, dan warangka dari berbagai daerah, lengkap dengan penjelasan tentang filosofi serta proses pembuatannya oleh para empu.','["museum keris","keris","museum","budaya","pusaka","nusantara"]',-7.5725,110.8129,'assets/images/museum-keris-nusantara-v2.jpg');
 
 -- Routes
 INSERT INTO routes (destination_id,mode_id,description,fare,duration_minutes) VALUES
@@ -79,10 +79,10 @@ INSERT INTO routes (destination_id,mode_id,description,fare,duration_minutes) VA
 
 -- Destinations 19-22
 INSERT INTO destinations (id,name,category,description,tags,latitude,longitude,image_url) VALUES
-(19,'Stadion Manahan Solo','Olahraga & Rekreasi','Stadion berstandar internasional dan ikon kota Solo, sering menggelar konser dan event besar.','["stadion","manahan","olahraga","konser","event","sepakbola"]',-7.5497,110.8084,'assets/images/stadion-manahan.jpg'),
-(20,'Solo Grand Mall','Belanja','Pusat perbelanjaan modern di jantung kota Solo dengan beragam tenant fashion, kuliner, dan hiburan.','["mall","belanja","fashion","kuliner","hiburan","modern"]',-7.5580,110.8220,'assets/images/solo-grand-mall.jpg'),
-(21,'Taman Satwa Taru Jurug','Taman & Rekreasi','Kebun binatang tertua di Solo dengan koleksi satwa dan area bermain keluarga di tepi Bengawan Solo.','["kebun binatang","jurug","satwa","taman","rekreasi","keluarga"]',-7.5530,110.8640,'assets/images/taman-jurug.jpg'),
-(22,'Rumah Atsiri Indonesia','Wisata Edukasi','Museum dan taman tanaman aromatik interaktif dengan pemandangan indah khas pedesaan Solo.','["rumah atsiri","aromatik","museum","edukasi","taman","wisata"]',-7.6042,110.7153,'assets/images/rumah-atsiri.jpg');
+(19,'Stadion Manahan Solo','Olahraga & Rekreasi','Stadion berstandar internasional yang menjadi markas Persis Solo dan salah satu ikon olahraga kota. Selain pertandingan sepak bola, tempat ini sering dipakai untuk konser dan event besar, dan kawasan sekitarnya ramai dipakai warga untuk jogging dan berolahraga di akhir pekan.','["stadion","manahan","olahraga","konser","event","sepakbola"]',-7.5497,110.8084,'assets/images/stadion-manahan-v2.jpg'),
+(20,'Solo Grand Mall','Belanja','Pusat perbelanjaan modern di jantung kota Solo, tepat di kawasan jalan utama. Tersedia beragam tenant fashion, kafe dan restoran, serta tempat hiburan, menjadikannya pilihan praktis untuk belanja, makan siang, atau sekadar berteduh sambil menikmati suasana kota.','["mall","belanja","fashion","kuliner","hiburan","modern"]',-7.5580,110.8220,'assets/images/solo-grand-mall-v2.jpg'),
+(21,'Taman Satwa Taru Jurug','Taman & Rekreasi','Kebun binatang di tepi Bengawan Solo yang sudah lama menjadi tempat rekreasi favorit keluarga. Pengunjung bisa melihat koleksi satwa dari berbagai daerah, berjalan santai di bawah pepohonan rindang, dan menikmati area bermain anak dalam suasana yang teduh.','["kebun binatang","jurug","satwa","taman","rekreasi","keluarga"]',-7.5530,110.8640,'assets/images/taman-jurug-v2.jpg'),
+(22,'Rumah Atsiri Indonesia','Wisata Edukasi','Wisata edukasi tentang tanaman aromatik dan minyak atsiri dengan udara sejuk dan pemandangan alam yang asri. Pengunjung bisa belajar proses penyulingan, melihat museum dan kebun tanaman aromatik, serta membeli produk minyak atsiri sebagai oleh-oleh.','["rumah atsiri","aromatik","museum","edukasi","taman","wisata"]',-7.6042,110.7153,'assets/images/rumah-atsiri-v2.jpg');
 
 -- Routes 19-22
 INSERT INTO routes (destination_id,mode_id,description,fare,duration_minutes) VALUES
@@ -15289,3 +15289,64 @@ INSERT INTO route_geometry_points (route_code, segment_index, point_order, longi
 ('S2', 1, 755, 110.8205290, -7.5522770),
 ('S2', 1, 756, 110.8203420, -7.5527340),
 ('S2', 1, 757, 110.8202400, -7.5526950);
+
+-- Destinations 23-33: Wisata Religi
+INSERT INTO destinations (id,name,category,description,tags,latitude,longitude,image_url) VALUES
+(23,'Masjid Agung Kraton Surakarta','Wisata Religi','Masjid kerajaan Kasunanan Surakarta yang terletak di dalam kompleks keraton, memiliki arsitektur Jawa klasik dan menjadi pusat kegiatan keagamaan keraton.','["masjid","kraton","islam","keraton","sejarah","religi"]',-7.5744033,110.8265936,'assets/images/masjid-agung-surakarta.jpg'),
+(24,'Masjid Al Wustho Mangkunegaran','Wisata Religi','Masjid di kompleks Pura Mangkunegaran dengan arsitektur yang memadukan gaya Jawa dan modern, tempat ibadah utama keluarga Mangkunegaran.','["masjid","mangkunegaran","islam","pura","religi"]',-7.5654454,110.8214387,'assets/images/pura-mangkunegaran.jpg'),
+(25,'Masjid Raya Sheikh Zayed Solo Surakarta','Wisata Religi','Masjid megah dengan arsitektur Timur Tengah yang menjadi landmark baru Solo, dilengkapi kubah emas dan fasilitas modern untuk beribadah dan belajar Islam.','["masjid","sheikh zayed","islam","modern","megah","religi"]',-7.5549587,110.8270355,'assets/images/masjid-agung-surakarta.jpg'),
+(26,'Masjid Laweyan','Wisata Religi','Masjid bersejarah di Kampung Batik Laweyan yang menjadi pusat kegiatan keagamaan masyarakat pengrajin batik, memiliki nilai historis tinggi.','["masjid","laweyan","islam","batik","sejarah","religi"]',-7.5714620,110.7925580,'assets/images/kampung-batik-laweyan.jpg'),
+(27,'Vihara Dhamma Sundara','Wisata Religi','Vihara Buddha yang tenang dan asri, tempat ibadah umat Buddha di Solo dengan arsitektur khas dan suasana yang damai untuk meditasi.','["vihara","buddha","meditasi","religi","damai"]',-7.5698423,110.8487998,'assets/images/hero-bg.jpg'),
+(28,'Pura Indraprasta','Wisata Religi','Pura Hindu yang menjadi pusat peribadatan umat Hindu di Solo, dengan arsitektur khas Bali dan suasana yang sakral untuk beribadah.','["pura","hindu","bali","religi","sakral"]',-7.5653241,110.7871019,'assets/images/hero-bg.jpg'),
+(29,'TITD Poo An Kiong','Wisata Religi','Kelenteng (Tri Dharma) bersejarah di Solo yang menjadi tempat ibadah umat Konghucu, Tao, dan Buddha, dengan ornamen dan arsitektur Tionghoa klasik.','["kelenteng","tri dharma","tionghoa","religi","budaya"]',-7.5748026,110.8228019,'assets/images/hero-bg.jpg'),
+(30,'Gereja Kristen Jawa Margoyudan','Wisata Religi','Gereja bersejarah dengan arsitektur khas yang menjadi salah satu gereja Kristen tertua di Solo, tempat ibadah umat Kristen Jawa.','["gereja","kristen","jawa","sejarah","religi"]',-7.5583272,110.8295303,'assets/images/hero-bg.jpg'),
+(31,'Gereja Katolik Paroki Santo Petrus, Purwosari Gendengan','Wisata Religi','Gereja Katolik dengan arsitektur kolonial yang megah di kawasan Purwosari, menjadi pusat kegiatan umat Katolik dengan sejarah panjang.','["gereja","katolik","santo petrus","kolonial","religi"]',-7.5651094,110.8062759,'assets/images/hero-bg.jpg'),
+(32,'Gereja Katolik Paroki Santo Antonius Padua, Purbayan','Wisata Religi','Gereja Katolik di kawasan Purbayan dekat keraton, memiliki nilai historis dan menjadi tempat ibadah umat Katolik di pusat kota Solo.','["gereja","katolik","santo antonius","purbayan","religi"]',-7.5687813,110.8298146,'assets/images/hero-bg.jpg'),
+(33,'Gereja Katolik Paroki Santa Perawan Maria Regina, Purbowardayan','Wisata Religi','Gereja Katolik modern di kawasan Purbowardayan dengan fasilitas lengkap untuk kegiatan keagamaan dan sosial umat Katolik.','["gereja","katolik","maria regina","modern","religi"]',-7.5592515,110.8353547,'assets/images/hero-bg.jpg');
+
+-- Routes for destinations 23-33
+INSERT INTO routes (destination_id,mode_id,description,fare,duration_minutes) VALUES
+-- 23: Masjid Agung Kraton
+(23,1,'Koridor 2 - Kartasura ke Gladag','Rp 3.700',24),
+(23,3,'Jalur AC - Pasar Gede ke Gladag','Rp 5.000',18),
+(23,4,'Titik jemput terdekat ke Masjid Agung Kraton','Rp 10rb-16rb',11),
+-- 24: Masjid Al Wustho
+(24,1,'Koridor 1 - Palur ke Mangkunegaran','Rp 3.700',20),
+(24,2,'Stasiun Solo Balapan ke jalan kaki 10 menit','Rp 8.000',23),
+(24,4,'Titik jemput terdekat ke Masjid Al Wustho','Rp 9rb-14rb',10),
+-- 25: Masjid Sheikh Zayed
+(25,1,'Koridor 2 - Kartasura ke Manahan','Rp 3.700',22),
+(25,3,'Pasar Gede ke Manahan','Rp 5.000',20),
+(25,4,'Titik jemput terdekat ke Masjid Sheikh Zayed','Rp 9rb-14rb',10),
+-- 26: Masjid Laweyan
+(26,1,'Koridor 2 - Kartasura ke Laweyan','Rp 3.700',28),
+(26,3,'Jalur A - Gading ke Laweyan','Rp 5.000',24),
+(26,4,'Titik jemput terdekat ke Masjid Laweyan','Rp 12rb-18rb',13),
+-- 27: Vihara Dhamma Sundara
+(27,1,'Koridor 1 - Palur ke Jebres','Rp 3.700',26),
+(27,3,'Pasar Gede ke Jebres','Rp 5.000',22),
+(27,4,'Titik jemput terdekat ke Vihara Dhamma Sundara','Rp 10rb-16rb',12),
+-- 28: Pura Indraprasta
+(28,1,'Koridor 2 - Kartasura ke Laweyan, jalan kaki 8 menit','Rp 3.700',32),
+(28,3,'Jalur A - Gading ke Laweyan','Rp 5.000',28),
+(28,4,'Titik jemput terdekat ke Pura Indraprasta','Rp 12rb-18rb',14),
+-- 29: TITD Poo An Kiong
+(29,1,'Koridor 1 - Palur ke Gladag, jalan kaki 5 menit','Rp 3.700',26),
+(29,3,'Pasar Gede ke Gladag','Rp 5.000',20),
+(29,4,'Titik jemput terdekat ke TITD Poo An Kiong','Rp 10rb-15rb',11),
+-- 30: GKJ Margoyudan
+(30,1,'Koridor 2 - Kartasura ke Manahan','Rp 3.700',20),
+(30,3,'Pasar Gede ke Sriwedari','Rp 5.000',18),
+(30,4,'Titik jemput terdekat ke GKJ Margoyudan','Rp 9rb-14rb',10),
+-- 31: Gereja Katolik Santo Petrus
+(31,1,'Koridor 2 - Kartasura ke Purwosari','Rp 3.700',22),
+(31,2,'Stasiun Purwosari ke jalan kaki 5 menit','Rp 8.000',20),
+(31,4,'Titik jemput terdekat ke Gereja Santo Petrus','Rp 10rb-16rb',11),
+-- 32: Gereja Katolik Santo Antonius
+(32,1,'Koridor 1 - Palur ke Gladag, jalan kaki 7 menit','Rp 3.700',28),
+(32,3,'Pasar Gede ke Gladag','Rp 5.000',22),
+(32,4,'Titik jemput terdekat ke Gereja Santo Antonius','Rp 10rb-15rb',12),
+-- 33: Gereja Katolik Maria Regina
+(33,1,'Koridor 1 - Palur ke Sriwedari','Rp 3.700',26),
+(33,3,'Pasar Gede ke Sriwedari','Rp 5.000',22),
+(33,4,'Titik jemput terdekat ke Gereja Maria Regina','Rp 9rb-14rb',10);

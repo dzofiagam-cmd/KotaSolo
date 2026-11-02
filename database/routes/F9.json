@@ -1282,6 +1282,66 @@
             -7.5895312
         ],
         [
+            110.8346476,
+            -7.5897858
+        ],
+        [
+            110.8345638,
+            -7.5900411
+        ],
+        [
+            110.8344633,
+            -7.590339
+        ],
+        [
+            110.8343543,
+            -7.5906794
+        ],
+        [
+            110.8342454,
+            -7.5910623
+        ],
+        [
+            110.8341532,
+            -7.5914027
+        ],
+        [
+            110.8340862,
+            -7.5916325
+        ],
+        [
+            110.834019,
+            -7.591744
+        ],
+        [
+            110.8340862,
+            -7.5916325
+        ],
+        [
+            110.8341532,
+            -7.5914027
+        ],
+        [
+            110.8342454,
+            -7.5910623
+        ],
+        [
+            110.8343543,
+            -7.5906794
+        ],
+        [
+            110.8344633,
+            -7.590339
+        ],
+        [
+            110.8345638,
+            -7.5900411
+        ],
+        [
+            110.8346476,
+            -7.5897858
+        ],
+        [
             110.8348389,
             -7.5893121
         ],
@@ -2896,88 +2956,92 @@
             "vertex": 316
         },
         {
+            "name": "RSUD Bung Karno",
+            "vertex": 327
+        },
+        {
             "name": "Gemblegan Sampurna",
-            "vertex": 384
+            "vertex": 399
         },
         {
             "name": "Widya Wacana [Selatan]",
-            "vertex": 390
+            "vertex": 405
         },
         {
             "name": "SD Kanisius [Barat]",
-            "vertex": 390
+            "vertex": 405
         },
         {
             "name": "SD Kanisius [Timur]",
-            "vertex": 390
+            "vertex": 405
         },
         {
             "name": "Gereja Masjid",
-            "vertex": 393
+            "vertex": 408
         },
         {
             "name": "Simpang Notosuman",
-            "vertex": 401
+            "vertex": 416
         },
         {
             "name": "Penni Galery",
-            "vertex": 413
-        },
-        {
-            "name": "Singosaren",
-            "vertex": 414
-        },
-        {
-            "name": "Gatot Subroto",
-            "vertex": 420
-        },
-        {
-            "name": "Triwindu",
-            "vertex": 425
-        },
-        {
-            "name": "Mangkunegaran Selatan",
-            "vertex": 427
-        },
-        {
-            "name": "Atria",
             "vertex": 428
         },
         {
+            "name": "Singosaren",
+            "vertex": 429
+        },
+        {
+            "name": "Gatot Subroto",
+            "vertex": 435
+        },
+        {
+            "name": "Triwindu",
+            "vertex": 440
+        },
+        {
+            "name": "Mangkunegaran Selatan",
+            "vertex": 442
+        },
+        {
+            "name": "Atria",
+            "vertex": 443
+        },
+        {
             "name": "SMA Muhammadiyah 1 [Utara]",
-            "vertex": 476
+            "vertex": 491
         },
         {
             "name": "Rusun Mangkunegaran",
-            "vertex": 479
+            "vertex": 494
         },
         {
             "name": "Simpang Pasar Legi Selatan",
-            "vertex": 484
+            "vertex": 499
         },
         {
             "name": "Pasar Legi Barat",
-            "vertex": 490
+            "vertex": 505
         },
         {
             "name": "Pasar Legi",
-            "vertex": 500
+            "vertex": 515
         },
         {
             "name": "SMP Widya Wacana",
-            "vertex": 507
+            "vertex": 522
         },
         {
             "name": "Patung Mayor Achmadi [Barat]",
-            "vertex": 531
+            "vertex": 546
         },
         {
             "name": "Pasar Sibela [Utara]",
-            "vertex": 643
+            "vertex": 658
         },
         {
             "name": "Sibela Utara",
-            "vertex": 653
+            "vertex": 668
         }
     ],
     "loop": false
