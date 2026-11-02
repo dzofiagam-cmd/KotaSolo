@@ -12,6 +12,9 @@ return [
 
     'cors_origin' => getenv('RUTESOLO_CORS_ORIGIN') ?: '*',
 
-    'gemini_api_key' => 'AQ.Ab8RN6I8-Enp0Rd77G28FB7qZOORE1Sv9LuwLZfKsb6_YSJ8OA',
+    'gemini_api_key' => 'AQ.Ab8RN6Kmte_J-IBk5WX1zX9VZmJY_7d23Mfq1MK8HmbRwQ9sgQ',
+    // Sementara true untuk diagnosa; set false setelah chatbot beres.
+    'debug' => true,
+
     'gemini_model'   => 'gemini-3.5-flash-lite',
 ];

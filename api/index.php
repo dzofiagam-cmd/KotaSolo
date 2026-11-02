@@ -73,18 +73,134 @@ function routeCodeParam($required = false)
     return $value;
 }
 
+/*
+ * Cadangan berbasis file: dipakai saat database tidak bisa dihubungi
+ * (kredensial salah, host tidak terjangkau, tabel belum di-import).
+ * Sumber data: /data/stops.json dan /data/routes/{KODE}.json
+ */
+function fileFallback($path)
+{
+    $dir = dirname(__DIR__) . '/data';
+
+    if ($path === 'destinations') {
+        $rows = array();
+        foreach (rutesolo_fallback_destinations() as $d) {
+            $rows[] = array(
+                'id'          => (int) $d['id'],
+                'name'        => (string) $d['name'],
+                'category'    => isset($d['category']) ? (string) $d['category'] : '',
+                'description' => isset($d['description']) ? (string) $d['description'] : '',
+                'tags'        => (isset($d['tags']) && is_array($d['tags'])) ? $d['tags'] : array(),
+                'latitude'    => (float) $d['latitude'],
+                'longitude'   => (float) $d['longitude'],
+                'image_url'   => isset($d['image_url']) ? $d['image_url'] : null,
+            );
+        }
+        if (!$rows) return;
+        header('X-Data-Source: file-fallback');
+        respond($rows);
+    }
+
+    if ($path === 'modes') {
+        header('X-Data-Source: file-fallback');
+        respond(rutesolo_fallback_modes());
+    }
+
+    if ($path === 'routes') {
+        $destinationId = integerParam('destination_id');
+        $modeId        = integerParam('mode_id');
+        $rows = array();
+        foreach (rutesolo_fallback_routes() as $r) {
+            if ($destinationId !== null && $r['destination_id'] !== $destinationId) continue;
+            if ($modeId !== null && $r['mode_id'] !== $modeId) continue;
+            $rows[] = $r;
+        }
+        if (!$rows) return;
+        header('X-Data-Source: file-fallback');
+        respond($rows);
+    }
+
+    if ($path === 'stops') {
+        $file = $dir . '/stops.json';
+        if (!is_file($file)) return;
+        $rows = json_decode((string) file_get_contents($file), true);
+        if (!is_array($rows)) return;
+        $routeCode = routeCodeParam();
+        $stops = array();
+        foreach ($rows as $row) {
+            if (!is_array($row) || count($row) < 4) continue;
+            $codes = (isset($row[4]) && is_array($row[4])) ? $row[4] : array();
+            if ($routeCode !== null && !in_array($routeCode, $codes, true)) continue;
+            $hub = !empty($row[5]);
+            $services = array();
+            foreach ($codes as $code) {
+                $services[] = array('route_code' => (string) $code, 'is_departure_hub' => $hub);
+            }
+            $stops[] = array(
+                'id'        => (int) $row[0],
+                'name'      => (string) $row[1],
+                'latitude'  => (float) $row[2],
+                'longitude' => (float) $row[3],
+                'services'  => $services,
+            );
+        }
+        header('X-Data-Source: file-fallback');
+        respond($stops);
+    }
+
+    if ($path === 'transit-routes') {
+        // Sama dengan isi tabel transit_routes di schema.sql (null = tidak diketahui)
+        $loops = array('F8' => true, 'F10' => true, 'S1' => null, 'S2' => null);
+        $routeCode = routeCodeParam();
+
+        if ($routeCode === null) {
+            $codes = array();
+            $files = glob($dir . '/routes/*.json');
+            if (!$files) return;
+            foreach ($files as $f) $codes[] = basename($f, '.json');
+            sort($codes);
+            $list = array();
+            foreach ($codes as $code) {
+                $list[] = array(
+                    'route_code' => $code,
+                    'is_loop'    => array_key_exists($code, $loops) ? $loops[$code] : false,
+                );
+            }
+            header('X-Data-Source: file-fallback');
+            respond($list);
+        }
+
+        // $routeCode sudah divalidasi regex [A-Za-z0-9_-], aman dari path traversal
+        $file = $dir . '/routes/' . $routeCode . '.json';
+        if (!is_file($file)) return;
+        $json = json_decode((string) file_get_contents($file), true);
+        if (!is_array($json) || empty($json['segments']) || !is_array($json['segments'])) return;
+        header('X-Data-Source: file-fallback');
+        respond(array(
+            'route_code' => $routeCode,
+            'is_loop'    => array_key_exists($routeCode, $loops) ? $loops[$routeCode] : false,
+            'segments'   => array_values($json['segments']),
+            'stops'      => array(),
+        ));
+    }
+}
+
+require_once __DIR__ . '/fallback.php';
+
+$path = parse_url(isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '', PHP_URL_PATH);
+if (!$path) $path = '';
+$path = preg_replace('#^.*/api(?:/index\.php)?#', '', $path);
+$path = trim($path, '/');
+if ($path === '' && isset($_GET['path']) && is_string($_GET['path'])) {
+    $path = trim($_GET['path'], '/');
+}
+
 try {
     if (!is_file(__DIR__ . '/config.php')) {
+        fileFallback($path);
         setupFail('database_config_missing', 'Konfigurasi database belum tersedia.');
     }
     require __DIR__ . '/db.php';
-    $path = parse_url(isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '', PHP_URL_PATH);
-    if (!$path) $path = '';
-    $path = preg_replace('#^.*/api(?:/index\.php)?#', '', $path);
-    $path = trim($path, '/');
-    if ($path === '' && isset($_GET['path']) && is_string($_GET['path'])) {
-        $path = trim($_GET['path'], '/');
-    }
     if ($_SERVER['REQUEST_METHOD'] !== 'GET') fail('Method not allowed.', 405);
 
     if ($path === 'health') {
@@ -226,6 +342,7 @@ try {
         $geometryRows = $geometryQuery->fetchAll();
         if (!$geometryRows) {
             error_log('RuteSolo API transit geometry missing for route: ' . $routeCode);
+            fileFallback($path);
             setupFail('schema_incomplete', 'Geometri rute transit belum tersedia.');
         }
 
@@ -263,6 +380,7 @@ try {
 
 } catch (PDOException $error) {
     error_log('RuteSolo API database error: ' . $error->getMessage());
+    fileFallback($path);
     setupFail('database_unavailable', 'Database tidak tersedia.');
 } catch (Throwable $error) {
     error_log('RuteSolo API runtime error: ' . $error->getMessage());

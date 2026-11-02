@@ -220,6 +220,8 @@ if (count($history) > 12) {
 */
 
 $knowledge = '';
+$knowledgeSource = 'none';
+$knowledgeError = '';
 
 try {
 
@@ -260,6 +262,16 @@ try {
          JOIN transport_modes m ON m.id = r.mode_id
          ORDER BY r.destination_id, r.duration_minutes'
     )->fetchAll();
+
+    /*
+     * Koneksi berhasil tapi tabel kosong (belum di-import)? Anggap gagal
+     * supaya data cadangan dari file dipakai.
+     */
+    if (empty($destinations)) {
+        throw new RuntimeException('Tabel destinations kosong.');
+    }
+
+    $knowledgeSource = 'database';
 
     /*
      * Format knowledge menjadi teks sederhana
@@ -341,15 +353,24 @@ try {
     /*
      * Jangan kirim detail database ke browser.
      */
+    $knowledgeError = get_class($e) . ': ' . $e->getMessage();
+
     error_log(
         'RuteSolo AI database error: ' .
         $e->getMessage()
     );
 
     /*
-     * AI tetap boleh bekerja tanpa knowledge database.
+     * Database tidak terjangkau: pakai data cadangan dari file
+     * (data/destinations.json) supaya AI tetap punya data resmi.
      */
-    $knowledge = "Data database RuteSolo sedang tidak tersedia.";
+    require_once __DIR__ . '/fallback.php';
+    $knowledge = rutesolo_fallback_knowledge();
+    $knowledgeSource = $knowledge === '' ? 'none' : 'file';
+
+    if ($knowledge === '') {
+        $knowledge = "Data database RuteSolo sedang tidak tersedia.";
+    }
 }
 
 /*
@@ -380,6 +401,8 @@ ATURAN PENTING:
 8. Gunakan format teks yang mudah dibaca.
 9. Untuk pertanyaan sederhana, jawab singkat.
 10. Untuk rekomendasi, berikan beberapa pilihan beserta alasan singkat.
+11. Jika DATA RESMI RUTESOLO berisi daftar destinasi, JANGAN pernah mengatakan database tidak tersedia. Langsung berikan rekomendasi dari data tersebut.
+12. Jika pengguna meminta rekomendasi tanpa detail, tawarkan 3-5 destinasi dari data beserta kategori dan alasan singkat.
 
 DATA RESMI RUTESOLO:
 {$knowledge}
@@ -632,7 +655,9 @@ if ($reply === '') {
 
 echo json_encode([
     'reply' => $reply,
-    'model' => $model
+    'model' => $model,
+    'knowledge_source' => $knowledgeSource,
+    'knowledge_error' => (!empty($config['debug']) ? $knowledgeError : null)
 ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
 exit;
