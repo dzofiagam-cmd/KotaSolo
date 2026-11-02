@@ -75,5 +75,5 @@ Setelah mengikuti workflow, pengunjung memperoleh gambaran destinasi yang dituju
 ## Referensi Implementasi
 
 - [Halaman utama dan elemen UI](./index.php)
-- [Interaksi pencarian, detail destinasi, peta, galeri, dan planner](./script.js)
+- [Interaksi pencarian, detail destinasi, peta, halte, galeri, planner, dan chatbot AI](./js/)
 - [Dokumentasi fitur RuteSolo](./README.md)

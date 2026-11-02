@@ -1,4 +1,4 @@
-/* RuteSolo */
+﻿/* RuteSolo */
 
 :root {
   --bg-base:#241916; --bg-surface:#30221d; --bg-elevated:#3a2821; --bg-card:#33251f;
@@ -20,7 +20,7 @@
   --t-fast:150ms; --t-base:300ms; --t-slow:600ms;
   --ease-out:cubic-bezier(0.16,1,0.3,1); --ease-io:cubic-bezier(0.45,0,0.55,1);
   --t-normal:var(--t-base); --dur-fast:var(--t-fast); --dur-normal:var(--t-base); --dur-slow:var(--t-slow); --ease-in-out:var(--ease-io);
-  --mode-bst:#8f9b75; --mode-krl:#b75c45; --mode-angkot:#c49a58; --mode-ojol:#72958b; --mode-all:#a84b36;
+  --mode-bst:#8f9b75; --mode-krl:#b75c45; --mode-ojol:#72958b; --mode-all:#a84b36;
   --fs-2xs:11px; --fs-xs:12px; --fs-sm:14px; --fs-base:16px; --fs-md:16px; --fs-lg:18px; --fs-xl:24px;
   --fs-2xl:clamp(28px,4.5vw,52px); --fs-3xl:clamp(36px,7vw,88px);
   --lh-tight:1.1; --lh-snug:1.3; --lh-base:1.6; --lh-relaxed:1.75; --lh-normal:var(--lh-base);
@@ -41,7 +41,7 @@ h1,h2,h3,h4{font-family:"Space Grotesk",system-ui,sans-serif;font-weight:var(--f
 h1{font-size:var(--fs-3xl);}h2{font-size:var(--fs-2xl);}h3{font-size:var(--fs-xl);}
 a{color:inherit;text-decoration:none;}button{cursor:pointer;font:inherit;border:none;background:none;}
 input,select,textarea{font:inherit;}img,video,svg{display:block;max-width:100%;}
-@media(max-width:599px){body{font-size:var(--fs-sm);}}
+/* (aturan font-size body di HP dihapus: nilai var(--fs-sm 0.75rem) tidak valid dan memang tidak pernah berlaku) */
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:translateY(0);}}
 @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
@@ -113,7 +113,7 @@ input,select,textarea{font:inherit;}img,video,svg{display:block;max-width:100%;}
   #mainNav a{font-size:clamp(22px,5vw,32px);font-weight:var(--fw-black);color:var(--text-1);}
 }
 
-.hero{position:relative;min-height:100svh;display:flex;align-items:center;isolation:isolate;overflow:hidden;background-image:url(assets/images/hero-bg.jpg);background-size:cover;background-position:center top;background-attachment:scroll;}
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;isolation:isolate;overflow:hidden;background:var(--bg-base);}
 .hero-noise{position:absolute;inset:0;z-index:0;opacity:0.04;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px 180px;background-repeat:repeat;}
 [data-theme="light"] .hero-noise{opacity:0.018;}
 .hero::before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(36,25,22,0.78) 0%,rgba(36,25,22,0.62) 40%,rgba(36,25,22,0.82) 100%),radial-gradient(ellipse 60% 50% at 60% 20%,rgba(168,75,54,0.28) 0%,transparent 60%),radial-gradient(ellipse 40% 30% at 15% 75%,rgba(196,154,88,0.16) 0%,transparent 55%);z-index:0;pointer-events:none;}
@@ -148,7 +148,20 @@ input,select,textarea{font:inherit;}img,video,svg{display:block;max-width:100%;}
 [data-theme="light"] .hero-orb--2{background:radial-gradient(circle,rgba(209,73,79,0.07) 0%,transparent 70%);animation-name:orbFloatLight;}
 [data-theme="light"] .hero-orb--3{background:radial-gradient(circle,rgba(95,158,170,0.06) 0%,transparent 70%);animation-name:orbFloatLight;}
 @media(max-width:767px){.hero{min-height:88svh;}.hero-content{padding-block:60px 40px;}.search-kbd{display:none;}.hero-orb--1{width:280px;height:280px;filter:blur(50px);}.hero-orb--2{width:200px;height:200px;filter:blur(44px);}.hero-orb--3{display:none;}}
-[data-theme="light"] .hero{background-image:url(assets/images/hero-bg.jpg);background-size:cover;background-position:center top;}
+/* Slideshow latar hero: foto destinasi bergantian (js/hero.js) */
+.hero-slides{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none;opacity:0;transition:opacity .6s ease;}
+.hero-slides.ready{opacity:1;}
+.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;opacity:0;transform:scale(1.07);transition:opacity 1.4s ease,transform 9s ease-out;will-change:opacity,transform;}
+.hero-slide.is-active{opacity:1;transform:scale(1);}
+.hero-caption{display:flex;align-items:center;gap:8px;margin-top:var(--sp-2);font-size:var(--fs-2xs);color:var(--text-2);font-family:"Plus Jakarta Sans",sans-serif;font-weight:var(--fw-bold);letter-spacing:.02em;animation:fadeIn .5s var(--ease-out) 600ms both;}
+.hero-caption::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent-2);flex-shrink:0;}
+.hero-dots{display:flex;gap:6px;margin-top:var(--sp-3);animation:fadeIn .5s var(--ease-out) 700ms both;}
+.hero-dot{position:relative;width:22px;height:22px;padding:0;border:0;background:transparent;cursor:pointer;}
+.hero-dot::after{content:"";position:absolute;left:50%;top:50%;width:18px;height:4px;border-radius:var(--radius-pill);transform:translate(-50%,-50%);background:var(--text-3);opacity:.5;transition:background .3s ease,opacity .3s ease,width .3s ease;}
+.hero-dot:hover::after{opacity:.9;}
+.hero-dot.is-active::after{width:26px;background:var(--accent-2);opacity:1;}
+@media(max-width:767px){.hero-dot{width:18px;}.hero-dot::after{width:12px;}.hero-dot.is-active::after{width:20px;}}
+@media(prefers-reduced-motion:reduce){.hero-slide{transform:none!important;transition:opacity .3s ease!important;}}
 [data-theme="light"] .hero::before{background:linear-gradient(to bottom,rgba(242,234,219,0.84) 0%,rgba(242,234,219,0.7) 40%,rgba(242,234,219,0.88) 100%),radial-gradient(ellipse 60% 50% at 60% 20%,rgba(168,75,54,0.12) 0%,transparent 60%);}
 
 .chips{display:flex;gap:var(--sp-2);padding-block:var(--sp-4);margin-top:var(--sp-4);overflow-x:auto;scroll-snap-type:x mandatory;-ms-overflow-style:none;scrollbar-width:none;flex-wrap:nowrap;position:relative;z-index:5;transition:opacity 200ms ease;}
@@ -161,6 +174,16 @@ input,select,textarea{font:inherit;}img,video,svg{display:block;max-width:100%;}
 .discovery-intro h2{font-weight:var(--fw-black);max-width:420px;}
 .discovery-intro>p{color:var(--text-2);font-size:var(--fs-sm);max-width:300px;line-height:var(--lh-relaxed);}
 @media(max-width:599px){.discovery-intro{flex-direction:column;align-items:flex-start;}}
+
+/* ── Category Tabs ── */
+.category-tabs-wrap{margin-bottom:var(--sp-6);overflow:hidden;}
+.category-tabs{display:flex;gap:var(--sp-2);overflow-x:auto;scroll-snap-type:x mandatory;-ms-overflow-style:none;scrollbar-width:none;padding-block:var(--sp-1);flex-wrap:nowrap;}
+.category-tabs::-webkit-scrollbar{display:none;}
+.cat-tab{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius-pill);border:1px solid var(--border-strong);background:transparent;color:var(--text-2);font-size:var(--fs-xs);font-weight:var(--fw-bold);font-family:"Plus Jakarta Sans",sans-serif;white-space:nowrap;flex-shrink:0;scroll-snap-align:start;cursor:pointer;min-height:38px;transition:background 180ms,color 180ms,border-color 180ms,transform 180ms;}
+.cat-tab:hover:not(.active){background:rgba(168,75,54,0.08);color:var(--text-1);}
+.cat-tab.active{background:var(--accent);border-color:transparent;color:#fff;transform:scale(1.04);}
+.cat-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--sp-4);padding:var(--sp-16);color:var(--text-3);text-align:center;font-size:var(--fs-sm);}
+.cat-empty i{opacity:0.5;}
 .bento-grid{display:grid;grid-template-columns:1fr;gap:var(--sp-4);}
 @media(min-width:560px){.bento-grid{grid-template-columns:repeat(2,1fr);}.bento-grid .card.featured{grid-column:span 2;}}
 @media(min-width:800px){.bento-grid{grid-template-columns:repeat(6,1fr);}.bento-grid .card{grid-column:span 2;}.bento-grid .card.featured{grid-column:span 4;}}
@@ -179,7 +202,7 @@ input,select,textarea{font:inherit;}img,video,svg{display:block;max-width:100%;}
 .card-meta span{display:flex;align-items:center;gap:4px;}
 .local-pick{color:var(--accent-2);font-weight:var(--fw-bold);}
 .card-body h3{font-size:var(--fs-lg);font-weight:var(--fw-bold);line-height:var(--lh-snug);margin-bottom:var(--sp-2);}
-.card-body p{font-size:var(--fs-sm);color:var(--text-2);line-height:var(--lh-relaxed);margin-bottom:var(--sp-3);font-family:"Plus Jakarta Sans",sans-serif;}
+.card-body p{font-size: 11px;color:var(--text-2);line-height:var(--lh-relaxed);margin-bottom:var(--sp-3);font-family:"Plus Jakarta Sans",sans-serif;}
 .transport-pills{display:flex;flex-wrap:wrap;gap:5px;padding-bottom:var(--sp-2);}
 .transport-pill{display:inline-flex;align-items:center;gap:4px;height:26px;padding:0 9px;border-radius:var(--radius-pill);border:1px solid var(--border-subtle);font-size:10px;font-weight:var(--fw-bold);color:var(--pill-color,var(--accent));font-family:"Plus Jakarta Sans",sans-serif;}
 .transport-pill i{width:13px;height:13px;color:inherit;}
@@ -296,6 +319,10 @@ input,select,textarea{font:inherit;}img,video,svg{display:block;max-width:100%;}
 .footer{background:var(--bg-elevated);border-top:1px solid var(--border-subtle);padding-block:var(--sp-10);}
 .footer-inner{display:flex;flex-direction:column;align-items:center;gap:var(--sp-3);text-align:center;}
 .footer-brand{display:flex;align-items:center;gap:9px;font-family:"Space Grotesk",sans-serif;font-weight:var(--fw-black);font-size:var(--fs-xl);color:var(--text-1);letter-spacing:-0.01em;}
+.footer-logo{display:block;width:min(160px,60vw);height:auto;}
+.footer-collab{display:flex;align-items:center;gap:var(--sp-3);flex-wrap:wrap;justify-content:center;}
+.footer-collab-x{font-size:var(--fs-sm);font-weight:var(--fw-bold);color:var(--text-3);opacity:0.6;}
+.footer-collab-names{display:flex;align-items:center;gap:6px;font-size:var(--fs-sm);color:var(--text-2);font-family:"Plus Jakarta Sans",sans-serif;}
 .footer p{font-size:var(--fs-sm);color:var(--text-3);font-family:"Plus Jakarta Sans",sans-serif;}
 .footer-credit{font-size:var(--fs-xs);}
 .footer-credit span{color:var(--accent-2);}
@@ -905,3 +932,322 @@ html{overflow-x:hidden;}
     }
     .ai-fab i { width: 20px; height: 20px; }
 }
+
+/* ===== Halte di peta (js/stops.js) ===== */
+.halte-icon{background:none;border:0;}
+.halte-pin{position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:100%;padding:4px;border-radius:50%;background:var(--halte-color,#7c3aed);border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.45);transition:transform var(--t-fast) var(--ease-out);}
+.halte-pin:hover{transform:scale(1.18);}
+.halte-pin--hub{border-width:3px;box-shadow:0 0 0 2px var(--halte-color,#7c3aed),0 3px 8px rgba(0,0,0,.5);}
+.halte-pin--multi::after{content:"";position:absolute;right:-3px;top:-3px;width:8px;height:8px;border-radius:50%;background:var(--accent-2);border:1.5px solid #fff;}
+.halte-pin--naik,.halte-pin--turun{box-shadow:0 0 0 3px rgba(255,255,255,.55),0 4px 10px rgba(0,0,0,.55);}
+.halte-pin--naik{background:#2e8b57;}
+.halte-pin--turun{background:#c0392b;}
+.halte-pin__tag{position:absolute;left:50%;top:100%;transform:translate(-50%,3px);padding:1px 7px;border-radius:var(--radius-pill);background:var(--bg-card);color:var(--text-1);border:1px solid var(--border-strong);font-size:10px;font-weight:var(--fw-bold);line-height:1.5;white-space:nowrap;box-shadow:var(--shadow-card);}
+.halte-zoom-far .halte-pin:not(.halte-pin--naik):not(.halte-pin--turun){transform:scale(.72);}
+.halte-badge{display:inline-flex;align-items:center;justify-content:center;min-width:24px;padding:1px 8px;border-radius:var(--radius-pill);background:var(--halte-color,#7c3aed);color:#fff;font-size:var(--fs-2xs);font-weight:var(--fw-bold);line-height:1.6;}
+.halte-pop{display:flex;flex-direction:column;gap:6px;}
+.halte-pop__name{font-family:"Space Grotesk",system-ui,sans-serif;font-size:var(--fs-base);color:var(--text-1);line-height:1.25;}
+.halte-pop__sub{font-size:var(--fs-xs);color:var(--text-3);}
+.halte-pop__routes{display:flex;flex-wrap:wrap;gap:4px;}
+.halte-pop__near{font-size:var(--fs-xs);color:var(--text-2);border-top:1px solid var(--border-subtle);padding-top:6px;}
+.halte-pop__near b{display:block;margin-bottom:3px;color:var(--text-1);}
+.halte-pop__near ul{list-style:none;display:flex;flex-direction:column;gap:2px;}
+.halte-pop__near li{display:flex;justify-content:space-between;gap:10px;}
+.halte-pop__near em{font-style:normal;color:var(--text-3);white-space:nowrap;}
+.halte-pop__btn{margin-top:2px;padding:8px 12px;border:0;border-radius:var(--radius-sm);background:var(--grad-primary);color:#fff;font:inherit;font-size:var(--fs-xs);font-weight:var(--fw-bold);cursor:pointer;}
+.halte-pop__btn:hover{opacity:.88;}
+#halteToggle[aria-pressed="false"]{opacity:.7;}
+#halteToggle:disabled{cursor:wait;opacity:.65;}
+
+/* Hasil planner: halte naik & turun */
+.pr-stops{display:flex;flex-direction:column;gap:8px;margin-top:var(--sp-3);padding:var(--sp-3);border:1px solid var(--border-subtle);border-radius:var(--radius-md);background:rgba(var(--bg-elevated-rgb),.45);text-align:left;}
+.pr-stops--empty{font-size:var(--fs-sm);color:var(--text-2);}
+.pr-stop-row{display:flex;align-items:center;gap:10px;font-size:var(--fs-sm);color:var(--text-1);}
+.pr-stop-row>div{flex:1;min-width:0;display:flex;flex-direction:column;}
+.pr-stop-row>div span{font-size:var(--fs-xs);color:var(--text-3);}
+.pr-stop-tag{flex:none;min-width:48px;padding:2px 10px;border-radius:var(--radius-pill);font-size:var(--fs-2xs);font-weight:var(--fw-bold);text-align:center;color:#fff;}
+.pr-stop-row--naik .pr-stop-tag{background:#2e8b57;}
+.pr-stop-row--turun .pr-stop-tag{background:#c0392b;}
+.pr-stop-row--transit .pr-stop-tag{background:var(--accent-2,#f59e0b);color:#fff;}
+.pr-stop-tag--transit{background:var(--accent-2,#f59e0b)!important;color:#fff!important;}
+.pr-stop-note{font-size:var(--fs-xs);color:var(--text-3);}
+
+
+/* ===== Patch mobile-friendly =====
+   - tinggi chat/menu pakai dvh (tidak ketutup address bar HP)
+   - area sentuh minimal ~44px (legend rute, pin halte, popup, zoom, menu)
+   - input 16px supaya iOS tidak auto-zoom
+   - safe-area untuk HP berponi / gesture bar
+   - teks mikro dinaikkan ke 11px */
+@media(max-width:799px){
+  .mobile-menu-btn{width:44px;height:44px;}
+  .bst-legend-btn{min-height:44px;padding:6px 12px;}
+  .bst-map-toggle{min-height:44px;}
+  .map-container{height:clamp(320px,58svh,480px);}
+  .leaflet-touch .leaflet-bar a{width:40px;height:40px;line-height:40px;}
+  .leaflet-touch .leaflet-control-zoom-in,.leaflet-touch .leaflet-control-zoom-out{font-size:22px;}
+  .leaflet-bottom.leaflet-right{margin-bottom:env(safe-area-inset-bottom,0px);}
+  /* pin halte kecil tapi area sentuh diperluas */
+  .halte-pin::before{content:"";position:absolute;inset:-11px;border-radius:50%;}
+  .halte-pop__btn{min-height:44px;padding:10px 14px;}
+  .leaflet-popup-content{margin:10px 14px;max-width:calc(100vw - 96px);}
+  .leaflet-popup-close-button{width:44px;height:44px;font-size:22px;line-height:44px;}
+  .hero-dot{width:28px;height:28px;}
+  .ai-chat-close{min-width:44px;min-height:44px;}
+  .ai-chat-input-area input,.field-wrap input,.field-wrap select,.cost-origin-select,
+  .search-box input,input[type="search"],input[type="text"]{font-size:16px;}
+  .eyebrow,.hero-eyebrow,.badge,.category,.card-meta,.cost-disclaimer,.source,.halte-pin__tag,
+  .transport-pill,.recommended-badge,.recommended-label{font-size:11px;}
+}
+@media(max-width:599px){
+  .container{width:calc(100% - var(--sp-6));}
+  .ai-chat-container{height:100vh;height:100dvh;max-height:100dvh;
+    padding-bottom:env(safe-area-inset-bottom,0px);padding-top:env(safe-area-inset-top,0px);}
+  .ai-fab{bottom:calc(16px + env(safe-area-inset-bottom,0px));right:calc(16px + env(safe-area-inset-right,0px));
+    width:56px;height:56px;}
+  .ai-chat-input-area button{width:44px;height:44px;}
+  .footer{padding-bottom:calc(var(--sp-10) + env(safe-area-inset-bottom,0px));}
+  .gallery-stage{height:clamp(240px,42svh,320px);}
+}
+@media(hover:none){
+  .halte-pin:hover{transform:none;}
+  .btn-outline:hover{background:transparent;color:var(--text-1);border-color:var(--border-strong);}
+}
+
+/* ===== Deskripsi kartu dipendekkan (teks lengkap tetap ada di detail rute) ===== */
+.slider .card.slide .card-body>p,
+.bento-grid .card .card-body>p{
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:6;line-clamp:6;
+  overflow:hidden;text-overflow:ellipsis;
+}
+.slider .card.slide .photo{max-height:220px;min-height:180px;}
+@media(max-width:599px){
+  .slider .card.slide .card-body>p,
+  .bento-grid .card .card-body>p{-webkit-line-clamp:6;line-clamp:6;}
+}
+
+
+/* =====================================================================
+   Fitur tambahan RuteSolo: cari destinasi, info tempat, favorit, jadwal WIB
+   Hanya memakai variabel tema yang sudah ada (--bg-*, --text-*, --border-*, --accent*).
+   Override [data-theme="light"] hanya untuk warna status agar kontras di kedua mode.
+   ===================================================================== */
+
+/* Dropdown bawaan browser (Moda utama, asal biaya): teks pilihan harus terbaca di mode gelap & terang */
+select option,select optgroup{background-color:var(--bg-surface);color:var(--text-1);}
+
+/* --- Kolom cari destinasi (planner) --- */
+.field-wrap--search{position:relative;}
+.dest-suggest{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:60;margin:0;padding:6px;list-style:none;max-height:260px;overflow-y:auto;border-radius:var(--radius-md);border:1px solid var(--border-strong);background:var(--bg-surface);color:var(--text-1);box-shadow:var(--shadow-hover);}
+.dest-suggest[hidden]{display:none;}
+.dest-suggest li{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:10px 12px;border-radius:var(--radius-sm);font-size:var(--fs-sm);color:var(--text-1);cursor:pointer;}
+.dest-suggest li small{flex:none;font-size:var(--fs-2xs);color:var(--text-2);white-space:nowrap;}
+.dest-suggest li.is-active,.dest-suggest li:hover{background:rgba(var(--accent-rgb),.14);}
+.dest-suggest mark{background:none;color:var(--accent-2);font-weight:var(--fw-bold);}
+.dest-suggest .dest-empty{justify-content:center;color:var(--text-2);cursor:default;}
+.dest-suggest .dest-empty:hover{background:none;}
+[data-theme="light"] .dest-suggest mark{color:#8f3d2c;}
+
+/* --- Info praktis tempat (di bawah deskripsi) --- */
+.place-info{display:grid;gap:10px;margin:var(--sp-4) 0 var(--sp-1);padding:var(--sp-4);border:1px solid var(--border-subtle);border-radius:var(--radius-md);background:rgba(var(--bg-elevated-rgb),.45);color:var(--text-1);}
+.place-row{display:flex;gap:10px;align-items:flex-start;font-size:var(--fs-sm);line-height:1.45;color:var(--text-1);}
+.place-row small{display:block;margin-bottom:1px;font-size:var(--fs-2xs);font-weight:var(--fw-semi);letter-spacing:.05em;text-transform:uppercase;color:var(--text-2);}
+.place-row>div>span{display:block;color:var(--text-1);}
+.place-ic{flex:none;display:inline-flex;margin-top:15px;color:var(--accent-2);}
+[data-theme="light"] .place-ic{color:var(--accent);}
+.place-row>div>span.place-sub,.place-sub{display:inline;font-size:var(--fs-xs);color:var(--text-2);}
+.place-row a{color:var(--text-1);text-decoration:underline;text-underline-offset:3px;word-break:break-word;}
+.place-row a:hover{color:var(--accent-2);}
+[data-theme="light"] .place-row a:hover{color:var(--accent);}
+.place-row .halte-badge{color:#fff;}
+
+.place-status{display:inline-block;margin:2px 0 4px;padding:2px 10px;border-radius:var(--radius-pill);font-size:var(--fs-xs);font-weight:var(--fw-bold);}
+.place-row>div>span.place-status{display:inline-block;}
+.place-status--open{background:rgba(46,139,87,.22);color:#8be0ab;}
+.place-status--closed{background:rgba(192,57,43,.24);color:#f6aca0;}
+[data-theme="light"] .place-status--open{background:rgba(46,139,87,.14);color:#1c6a40;}
+[data-theme="light"] .place-status--closed{background:rgba(192,57,43,.12);color:#9c2a1d;}
+
+/* Tombol aksi: Rute ke sini / Simpan / WhatsApp */
+.place-actions{display:flex;flex-wrap:wrap;gap:8px;margin:var(--sp-3) 0 var(--sp-1);}
+.place-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border-radius:var(--radius-pill);border:1px solid var(--border-strong);background:transparent;color:var(--text-1);font-size:var(--fs-sm);font-weight:var(--fw-semi);transition:transform var(--t-fast),background var(--t-fast);}
+.place-btn:hover{background:rgba(var(--accent-rgb),.12);transform:translateY(-1px);}
+.place-btn--primary{background:linear-gradient(135deg,#8f3d2c 0%,#a5553a 100%);border-color:transparent;color:#fff;}
+.place-btn--primary:hover{background:linear-gradient(135deg,#8f3d2c 0%,#a5553a 100%);opacity:.9;}
+.place-btn.is-fav{color:#f6a3b5;border-color:#f6a3b5;}
+.place-btn.is-fav svg{fill:currentColor;}
+[data-theme="light"] .place-btn.is-fav{color:#b0233f;border-color:#b0233f;}
+
+/* --- Hasil planner: jam WIB & jadwal. Selektor lebih spesifik dari ".pr-stop-row>div span" (warna --text-3) --- */
+.pr-stops .pr-clock{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;font-size:var(--fs-xs);color:var(--text-1);}
+.pr-stops .pr-clock span{color:var(--text-1);}
+.pr-stops span.pr-time{color:var(--text-1);font-weight:var(--fw-bold);white-space:nowrap;}
+.pr-stops span.pr-time--est{color:var(--text-2);font-weight:var(--fw-semi);}
+.pr-stops span.pr-note,.pr-stops p.pr-note{color:var(--text-2);font-size:var(--fs-xs);font-style:italic;}
+.pr-stops span.halte-badge{color:#fff;}
+
+/* --- Favorit & itinerary --- */
+.fav-fab{position:fixed;left:calc(16px + env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:500;display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border:0;border-radius:var(--radius-pill);background:linear-gradient(135deg,#8f3d2c 0%,#a5553a 100%);color:#fff;font-size:var(--fs-sm);font-weight:var(--fw-bold);box-shadow:0 4px 14px rgba(168,75,54,.4);}
+.fav-fab[hidden],.fav-panel[hidden]{display:none;}
+.fav-count{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 5px;border-radius:var(--radius-pill);background:#fff;color:#8f3d2c;font-size:var(--fs-xs);}
+.fav-panel{position:fixed;inset:0;z-index:1000;display:flex;align-items:flex-end;justify-content:center;background:rgba(18,10,7,.55);}
+.fav-sheet{width:min(460px,100%);max-height:85vh;overflow-y:auto;padding:var(--sp-5);border:1px solid var(--border-strong);border-radius:var(--radius-lg) var(--radius-lg) 0 0;background:var(--bg-surface);color:var(--text-1);box-shadow:var(--shadow-hover);}
+@media(min-width:640px){.fav-panel{align-items:center;}.fav-sheet{border-radius:var(--radius-lg);}}
+.fav-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--sp-3);}
+.fav-head h4{font-size:var(--fs-lg);color:var(--text-1);}
+.fav-close{padding:4px 8px;font-size:var(--fs-lg);color:var(--text-1);}
+.fav-list{list-style:none;display:grid;gap:8px;}
+.fav-item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);background:var(--bg-card);}
+.fav-item-main b{display:block;font-size:var(--fs-sm);color:var(--text-1);}
+.fav-item-main small{font-size:var(--fs-xs);color:var(--text-2);}
+.fav-item-actions{display:flex;flex:none;gap:4px;}
+.fav-item-actions button{padding:6px 9px;border-radius:var(--radius-sm);background:rgba(var(--accent-rgb),.14);color:var(--text-1);font-size:var(--fs-xs);font-weight:var(--fw-semi);}
+.fav-item-actions button:disabled{opacity:.4;cursor:default;}
+.fav-empty{padding:18px 0;text-align:center;color:var(--text-2);}
+.fav-foot{display:flex;flex-wrap:wrap;gap:8px;margin-top:var(--sp-4);}
+.fav-foot button{flex:1 1 140px;padding:10px 12px;border:1px solid var(--border-strong);border-radius:var(--radius-pill);background:transparent;color:var(--text-1);font-size:var(--fs-sm);font-weight:var(--fw-semi);}
+.fav-foot button:disabled{opacity:.45;cursor:default;}
+.fav-foot .fav-primary{border-color:transparent;background:linear-gradient(135deg,#8f3d2c 0%,#a5553a 100%);color:#fff;}
+
+/* =====================================================================
+   Mobile-friendly v2  (dipasangkan dengan js/mobile.js)
+   Tujuan: nyaman dipakai satu tangan di HP. Beberapa elemen dekoratif
+   disembunyikan / dilipat di layar kecil supaya halaman lebih ringkas.
+   ===================================================================== */
+
+/* --- Dasar semua layar sentuh --- */
+html{-webkit-tap-highlight-color:transparent;}
+/* clip (bukan hidden) supaya navbar sticky tetap menempel; browser lama jatuh ke hidden di atas */
+body{overflow-x:clip;}
+a,button,input,select,summary,[role="button"],.chip,.cat-tab,.card{touch-action:manipulation;}
+/* geser horizontal diserahkan ke JS (slider & galeri), scroll vertikal tetap ke halaman */
+.slider-viewport,.gallery-stage{touch-action:pan-y pinch-zoom;}
+/* aman untuk HP berponi saat landscape */
+.container{width:calc(100% - 2*max(var(--sp-4),env(safe-area-inset-left,0px),env(safe-area-inset-right,0px)));}
+@media(max-width:599px){
+  .container{width:calc(100% - 2*max(var(--sp-3),env(safe-area-inset-left,0px),env(safe-area-inset-right,0px)));}
+}
+
+/* --- Hover tidak ada di layar sentuh: jangan biarkan efek hover "nyangkut" setelah ketuk --- */
+@media(hover:none){
+  .card:hover{transform:none!important;box-shadow:none;border-color:var(--border-subtle);}
+  .card:hover .photo img{transform:none;filter:none;}
+  .route-item:hover{transform:none;}
+  .btn-primary:hover,.route-btn:hover,.route-link:hover,.place-btn:hover{transform:none;opacity:1;}
+  .place-btn:hover{background:transparent;}
+  .place-btn--primary:hover{background:linear-gradient(135deg,#8f3d2c 0%,#a5553a 100%);}
+  .chip:hover:not(.active),.cat-tab:hover:not(.active){background:transparent;}
+  .arrow:hover{transform:translateY(-50%);}
+}
+
+/* --- Tombol-tombol buatan mobile.js: disembunyikan di desktop --- */
+.map-filter-btn{display:none;}
+.map-lock-btn{position:absolute;left:10px;bottom:10px;z-index:1000;display:inline-flex;align-items:center;gap:6px;
+  min-height:44px;padding:0 14px;border-radius:var(--radius-pill);border:1px solid var(--border-strong);
+  background:var(--bg-card);color:var(--text-1);font-size:12px;font-weight:var(--fw-bold);
+  font-family:"Plus Jakarta Sans",sans-serif;box-shadow:var(--shadow-card);}
+.map-lock-btn[aria-pressed="true"]{background:var(--grad-primary);color:#fff;border-color:transparent;}
+/* peta terkunci: satu jari menggeser halaman, bukan peta */
+.leaflet-container.map-locked{touch-action:pan-x pan-y!important;}
+html.is-locked,html.is-locked body{overflow:hidden;}
+
+/* =====================  HP & tablet kecil (<800px)  ===================== */
+@media(max-width:799px){
+
+  /* ritme vertikal lebih rapat */
+  .section{padding-block:48px;}
+  .section-header,.section-title{margin-bottom:var(--sp-5);}
+  .discovery-intro{margin-bottom:var(--sp-6);gap:var(--sp-3);}
+  .footer{padding-bottom:calc(88px + env(safe-area-inset-bottom,0px));} /* ruang untuk tombol melayang */
+
+  /* hero: lebih pendek, tanpa hiasan blur yang berat di HP */
+  .hero{min-height:min(88svh,640px);}
+  .hero-content{padding-block:48px 32px;}
+  .hero-orb{display:none;}
+
+  /* foto kecil di bawah galeri disembunyikan (galeri sudah bisa digeser / panah) */
+  .section--photos{display:none;}
+
+  /* kartu destinasi */
+  .photo,.photo--fallback{min-height:170px;}
+  .slider .card.slide .photo{min-height:160px;max-height:190px;}
+  .card-body{padding:var(--sp-4) var(--sp-4) var(--sp-5);}
+  .card-body p{font-size:13px;line-height:1.6;}
+  .slider .card.slide .card-body>p,
+  .bento-grid .card .card-body>p{-webkit-line-clamp:4;line-clamp:4;}
+  .route-btn,.route-link{height:44px;padding:0 20px;font-size:13px;}
+
+  /* detail rute */
+  .result-hero{height:200px;}
+  .result-info{left:14px;right:14px;bottom:14px;}
+  .result-info h3{font-size:20px;}
+  .close{width:44px;height:44px;top:12px;right:12px;}
+  .route-body{padding:var(--sp-4);}
+  .route-item{gap:10px;padding:12px;}
+  .route-main{min-width:0;}
+
+  /* planner */
+  .planner-form,.planner-result{padding:var(--sp-4);}
+  .planner-form-header h3{font-size:var(--fs-lg);}
+  .origin-actions .btn-outline{flex:1 1 140px;justify-content:center;}
+  .btn-submit{margin-top:var(--sp-4);}
+  .planner-result{min-height:160px;scroll-margin-top:76px;}
+  .dest-suggest{max-height:min(260px,40svh);}
+  .place-info{padding:var(--sp-3);}
+  .place-btn{flex:1 1 140px;justify-content:center;min-height:44px;}
+
+  /* peta: toolbar dilipat di belakang tombol "Filter jalur" */
+  .section--map{padding-bottom:0;}
+  .map-toolbar{flex-direction:column;align-items:stretch;gap:8px;margin-top:var(--sp-4);}
+  .bst-map-actions{order:-1;width:100%;flex-direction:row;flex-wrap:wrap;align-items:stretch;gap:8px;}
+  #halteToggle,.map-filter-btn{display:inline-flex;flex:1 1 140px;justify-content:center;}
+  .bst-map-legend,.bst-map-toggles{display:none;}
+  .map-toolbar.is-open .bst-map-legend{display:flex;}
+  .map-toolbar.is-open .bst-map-toggles{display:flex;width:100%;}
+  .map-toolbar.is-open .bst-map-toggles .btn-outline{flex:1 1 140px;justify-content:center;}
+  /* teks status tetap ada untuk pembaca layar, tampil biasa saat filter dibuka */
+  .bst-map-status{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+  .map-toolbar.is-open .bst-map-status{position:static;width:auto;height:auto;overflow:visible;clip-path:none;white-space:normal;max-width:none;}
+
+  /* tombol melayang */
+  .fav-fab{min-height:48px;padding:12px 16px;}
+  .fav-sheet{max-height:85dvh;padding-bottom:calc(var(--sp-5) + env(safe-area-inset-bottom,0px));}
+  .fav-close{min-width:44px;min-height:44px;}
+  .fav-item-actions button{min-height:40px;padding:6px 12px;}
+}
+
+/* =====================  HP (<600px)  ===================== */
+@media(max-width:599px){
+  /* chip & tab kategori: geser sampai tepi layar */
+  .chips{margin-inline:calc(var(--sp-3)*-1);padding-inline:var(--sp-3);scroll-padding-inline:var(--sp-3);}
+  .category-tabs-wrap{margin-inline:calc(var(--sp-3)*-1);}
+  .category-tabs{padding-inline:var(--sp-3);scroll-padding-inline:var(--sp-3);}
+
+  /* chat AI: ikut tinggi layar yang benar-benar kelihatan (keyboard HP) */
+  .ai-chat-container{top:var(--vvt,0px);bottom:auto;height:var(--vvh,100dvh);max-height:var(--vvh,100dvh);}
+  .ai-chat-messages{overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
+}
+
+.cat-tab .cat-emoji{font-size:15px;line-height:1;display:inline-block;}
+
+/* ===== Perbaikan: toolbar peta sejajar (desktop) ===== */
+@media(min-width:768px){
+  .map-toolbar{flex-wrap:wrap;}
+  .bst-map-actions{flex:1 1 100%;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:8px;}
+  .bst-map-toggles{align-items:center;}
+  .bst-map-actions .btn-outline{min-height:44px;justify-content:center;}
+  .bst-map-status{flex:1 1 100%;max-width:none;}
+}
+
+/* ===== Perbaikan: jam tiba di bawah jam sekarang ===== */
+.pr-stops .pr-clock{flex-direction:column;flex-wrap:nowrap;justify-content:flex-start;align-items:flex-start;gap:2px;}
+
+/* ===== Perbaikan: form kiri lebih kecil, hasil kanan lebih besar ===== */
+@media(min-width:800px){.planner{grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);}}
+
+/* ===== Tombol kategori destinasi di atas peta ===== */
+.dest-map-toggles{align-items:center;flex:1 1 100%;}
+.dest-map-toggle{display:inline-flex;align-items:center;gap:6px;}
+.dest-map-toggle svg,.dest-map-toggle i{width:16px;height:16px;flex:none;}
+.dest-map-toggle.is-active{background:var(--accent);border-color:transparent;color:#fff;}
+@media(max-width:767px){.dest-map-toggles .bst-map-legend__title{flex:1 1 100%;}}

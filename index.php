@@ -27,7 +27,7 @@ try {
     require_once __DIR__ . '/api/db.php';
 
     $modesRaw = db()->query(
-        'SELECT id, slug, name, icon, color FROM transport_modes ORDER BY id'
+        "SELECT id, slug, name, icon, color FROM transport_modes WHERE slug <> 'angkot' ORDER BY id"
     )->fetchAll();
 
     foreach ($modesRaw as $m) {
@@ -45,7 +45,7 @@ try {
     )->fetchAll();
 
     $routesRaw = db()->query(
-        'SELECT r.destination_id, m.slug AS mode_slug, r.description, r.fare, r.duration_minutes FROM routes r JOIN transport_modes m ON m.id = r.mode_id ORDER BY r.destination_id, r.duration_minutes'
+        'SELECT r.destination_id, m.slug AS mode_slug, r.description, r.fare, r.duration_minutes FROM routes r JOIN transport_modes m ON m.id = r.mode_id WHERE m.slug <> \'angkot\' ORDER BY r.destination_id, r.duration_minutes'
     )->fetchAll();
 
     $routesByDest = [];
@@ -79,21 +79,98 @@ try {
     $modesData = [];
 }
 
+// Cadangan destinasi: kalau database kosong/gagal ATAU jumlahnya lebih sedikit dari
+// data/destinations.json, pakai file JSON (supaya semua destinasi tetap tampil).
+$destFile = __DIR__ . '/data/destinations.json';
+if (is_file($destFile)) {
+    $decodedDest = json_decode((string) file_get_contents($destFile), true);
+    if (is_array($decodedDest) && count($decodedDest) > count($destData)) {
+        $destData = [];
+        foreach ($decodedDest as $d) {
+            $opts = [];
+            foreach ((isset($d['options']) && is_array($d['options'])) ? $d['options'] : [] as $o) {
+                if (!is_array($o) || ($o['mode'] ?? '') === 'angkot') {
+                    continue;
+                }
+                $opts[] = [$o['mode'] ?? '', $o['description'] ?? '', $o['fare'] ?? '', $o['duration'] ?? ''];
+            }
+            $destData[] = [
+                'id'       => (int) ($d['id'] ?? 0),
+                'name'     => $d['name'] ?? '',
+                'category' => $d['category'] ?? '',
+                'desc'     => $d['description'] ?? '',
+                'tags'     => isset($d['tags']) && is_array($d['tags']) ? $d['tags'] : [],
+                'coords'   => [(float) ($d['latitude'] ?? 0), (float) ($d['longitude'] ?? 0)],
+                'img'      => $d['image_url'] ?? '',
+                'options'  => $opts,
+            ];
+        }
+    }
+}
+
+$stopsData = [];
+try {
+    $stopsRaw = db()->query(
+        'SELECT s.id, s.stop_name, s.latitude, s.longitude, svc.route_code, svc.is_departure_hub
+         FROM transport_stops s
+         LEFT JOIN route_stop_services svc ON svc.stop_id = s.id
+         ORDER BY s.id, svc.route_code'
+    )->fetchAll();
+
+    $stopsById = [];
+    foreach ($stopsRaw as $row) {
+        $sid = (int) $row['id'];
+        if (!isset($stopsById[$sid])) {
+            $stopsById[$sid] = [
+                $sid,
+                $row['stop_name'],
+                (float) $row['latitude'],
+                (float) $row['longitude'],
+                [],
+                0,
+            ];
+        }
+        if ($row['route_code'] !== null) {
+            $stopsById[$sid][4][] = $row['route_code'];
+            if (!empty($row['is_departure_hub'])) {
+                $stopsById[$sid][5] = 1;
+            }
+        }
+    }
+    $stopsData = array_values($stopsById);
+} catch (Throwable $e) {
+    error_log('RuteSolo stops data error: ' . $e->getMessage());
+    $stopsData = [];
+}
+
+// Cadangan: kalau database gagal/kosong, pakai data/stops.json (format baris sama)
+if (empty($stopsData)) {
+    $stopsFile = __DIR__ . '/data/stops.json';
+    if (is_file($stopsFile)) {
+        $decodedStops = json_decode((string) file_get_contents($stopsFile), true);
+        if (is_array($decodedStops)) {
+            $stopsData = $decodedStops;
+        }
+    }
+}
+
 $jsonFlags = JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
 $destJson  = json_encode($destData, $jsonFlags);
 $modesJson = json_encode($modesData, $jsonFlags);
+$stopsJson = json_encode($stopsData, $jsonFlags);
 $destJson  = $destJson === false ? '[]' : $destJson;
 $modesJson = $modesJson === false ? '[]' : $modesJson;
+$stopsJson = $stopsJson === false ? '[]' : $stopsJson;
 header('Content-Type: text/html; charset=utf-8');
 ?>
 <!DOCTYPE html>
 <html lang="id" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
     <meta name="color-scheme" content="dark light">
     <meta name="theme-color" content="#121510">
-    <meta name="description" content="Temukan destinasi wisata Solo dan cara tercepat mencapainya dengan BST, KRL, angkot, atau ojol.">
+    <meta name="description" content="Temukan destinasi wisata Solo dan cara tercepat mencapainya dengan BST, KRL, atau ojol.">
     <title>RuteSolo - Panduan Wisata Kota Solo</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -197,6 +274,9 @@ header('Content-Type: text/html; charset=utf-8');
                 </div>
                 <p>Pilih destinasi untuk melihat opsi transportasi yang tersedia.</p>
             </div>
+            <div class="category-tabs-wrap" role="group" aria-label="Filter kategori destinasi">
+                <div class="category-tabs" id="categoryTabs"></div>
+            </div>
             <div id="content"></div>
         </div>
     </section>
@@ -237,18 +317,19 @@ header('Content-Type: text/html; charset=utf-8');
                             <label for="originLng">Longitude</label>
                         </div>
                     </div>
-                    <div class="field-wrap">
-                        <select id="routeDestination" aria-label="Pilih destinasi wisata">
-                            <option value="">Pilih destinasi...</option>
-                        </select>
-                        <label for="routeDestination">Destinasi wisata</label>
+                    <div class="field-wrap field-wrap--search">
+                        <input id="routeDestinationSearch" type="text" placeholder=" " autocomplete="off" spellcheck="false"
+                               role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="routeDestinationList"
+                               aria-label="Cari destinasi wisata">
+                        <label for="routeDestinationSearch">Cari destinasi wisata</label>
+                        <input type="hidden" id="routeDestination">
+                        <ul class="dest-suggest" id="routeDestinationList" role="listbox" hidden></ul>
                     </div>
                     <div class="field-wrap">
                         <select id="routeMode" aria-label="Pilih moda transportasi">
-                            <option value="public">Transportasi umum (BST / KRL / angkot)</option>
+                            <option value="public">Transportasi umum (BST / KRL)</option>
                             <option value="bst">BST</option>
                             <option value="krl">KRL</option>
-                            <option value="angkot">Angkot</option>
                             <option value="ojol">Ojol last-mile</option>
                         </select>
                         <label for="routeMode">Moda utama</label>
@@ -282,7 +363,9 @@ header('Content-Type: text/html; charset=utf-8');
             <div class="map-toolbar">
                 <div class="bst-map-legend" id="routeLegend" aria-label="Pilih rute untuk menampilkan hanya jalur itu"></div>
                 <div class="bst-map-actions">
+                    <button type="button" class="btn-outline bst-map-toggle" id="halteToggle" aria-pressed="true" disabled>Memuat halte...</button>
                     <div class="bst-map-toggles" id="routeToggles"></div>
+                    <div class="bst-map-toggles dest-map-toggles" id="destToggles" role="group" aria-label="Tampilkan destinasi wisata per kategori"></div>
                     <p class="bst-map-status" id="bstRouteStatus" role="status" aria-live="polite">
                         Memuat geometri jalur transit.
                     </p>
@@ -310,7 +393,6 @@ header('Content-Type: text/html; charset=utf-8');
     <section class="section section--photos" id="foto-singkat" aria-label="Pilih foto">
         <div class="container">
             <div class="photo-grid" id="dots" role="tablist" aria-label="Pilih foto"></div>
-            <p class="source">Foto: gambar lokasi relevan dari Wikimedia Commons.</p>
         </div>
     </section>
 
@@ -325,10 +407,15 @@ header('Content-Type: text/html; charset=utf-8');
             </div>
             RuteSolo
         </div>
-        <p>Panduan transportasi wisata Kota Solo</p>
-        <p class="footer-credit">
-            Dibuat untuk warga dan wisatawan kota Solo
-        </p>
+        <div class="footer-collab">
+            <a href="https://www.instagram.com/transportforsolo?obrf=bWxrZHQ1eHF1bWhy" target="_blank" rel="noopener noreferrer">
+                <img class="footer-logo" src="assets/images/logo-tfslo.png" alt="Logo TFSLO">
+            </a>
+            <div class="footer-collab-names">
+                <span class="footer-collab-x" aria-hidden="true">✕</span>
+                <span>Damar, Fahmi, Firman &amp; Parama</span>
+            </div>
+        </div>
     </div>
 </footer>
 
@@ -367,8 +454,15 @@ header('Content-Type: text/html; charset=utf-8');
 <script>
 window.__DEST__  = <?php echo $destJson; ?>;
 window.__MODES__ = <?php echo $modesJson; ?>;
+window.__STOPS__ = <?php echo $stopsJson; ?>;
 </script>
-<script src="script.js?v=<?php echo @filemtime(__DIR__ . '/script.js') ?: time(); ?>"></script>
-
+<?php
+$jsFiles = ['config', 'constants', 'data', 'utils', 'state', 'transit-config', 'transit-routes', 'schedule-data', 'schedule', 'place-info', 'favorites', 'layout', 'gallery', 'hero', 'ui', 'map', 'stops', 'planner', 'ai', 'main', 'mobile'];
+foreach ($jsFiles as $jsFile) {
+    $jsPath = 'js/' . $jsFile . '.js';
+    $jsVer  = @filemtime(__DIR__ . '/' . $jsPath) ?: time();
+    echo '<script src="' . $jsPath . '?v=' . $jsVer . '"></script>' . "\n";
+}
+?>
 </body>
 </html>
